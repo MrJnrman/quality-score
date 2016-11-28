@@ -125,7 +125,7 @@ function manageFile(res, type){
 		// check if file exitst and write only if it does
 		fs.writeFile(backOutput, JSON.stringify(backResults), (err) => {
 			if (err) throw err;
-			console.log('File Updated');
+			console.log(BLUE + 'File Updated' + NC);
 		});
 	} // else if (type === 'nightwatch'){
 	// 	frontResults.nightwatch.results = res;
@@ -161,9 +161,6 @@ function isDirSync(path){
 		return fs.statSync(path).isDirectory();
 	} catch(e){
 		return false;
-	} else {
-		throw e;
-	}
 }
 
 function isFileSync(path){
@@ -171,9 +168,6 @@ function isFileSync(path){
 		return fs.statSync(path).isFile();
 	} catch (e){
 		return false;
-	} else {
-		throw e;
-	}
 }
 
 function executeMochaTests(testPath){
@@ -277,6 +271,10 @@ function jscs(path, present, fix){
 	if(fix){
 		if(isFileSync(path)){
 			var cmd = 'jscs ' + path + ' --fix --present=' + present + ' > code-style.txt';	
+			exec(cmd, function(error, stdout, stderr){
+				console.log(stdout);
+				console.log('Results from style check written to code-style.txt');
+			});
 		} else {
 			console.log(RED + 'Must be file!!');
 			console.log(BLUE + "JSCS can only fix a single file at a time");
@@ -284,18 +282,15 @@ function jscs(path, present, fix){
 	} else {
 		if(isFileSync(path) || isDirSync(path)){
 			var cmd = 'jscs ' + path + ' --present=' + present + ' > code-style.txt';
+			exec(cmd, function(error, stdout, stderr){
+				console.log(stdout);
+				console.log('Results from style check written to code-style.txt');
+			});
 		} else {
 			console.log(RED + 'File or Directory does not exist!!');
 			console.log(BLUE + "Valid File or Directory must be supplied!");
 		}
 	}
-	console.log(cmd);
-	
-
-	exec(cmd, function(error, stdout, stderr){
-		console.log(stdout);
-		console.log('Results from style check written to code-style.txt');
-	});
 }
 
 
@@ -322,8 +317,7 @@ try{
 			executeNightWatchTests(argv.nightwatch);
 		}
 	} else {
-		if (command === 'jscs-fix'){
-			console.log(argv);
+		if (command === 'jscs'){
 			jscs(argv.p, argv.s, argv.f)
 		}
 	}
@@ -333,4 +327,4 @@ try{
 }
 
 
-// console.log(argv.istanbul);
+// console.log(argv.istanbul); 
