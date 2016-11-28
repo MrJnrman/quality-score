@@ -83,7 +83,8 @@ var mocha = new Mocha({});
 var testing = [];
 var error = [];
 var RED = '\033[0;31m';
-var BLUE = '\033[0;43m';
+var BLUE = '\033[0;34m';
+var NC = '\033[0m';
 var frontResults = {
 	nightwatch: {
 
@@ -301,11 +302,11 @@ function jscs(path, present, fix){
 try{
 	if (command === 'back-end'){
 
-		if(isFileSync(argv.istanbul)){
+		if(isFileSync(argv.mocha)){
 			executeMochaTests(argv.mocha);
 		} else {
 			console.log(RED + 'File doe not exist!!');
-				console.log(BLUE + "Mocha requires valid test file!");
+			console.log(BLUE + "Mocha requires valid test file!" );
 		}
 		if (typeof argv.istanbul !== 'undefined'){
 
@@ -313,7 +314,7 @@ try{
 				retrieveInstanbulCoverageResults(argv.istanbul);
 			} else {
 				console.log(RED + 'File doe not exist!!');
-				console.log(BLUE + "Istanbul requires valid "coverage-summary.json" file!");
+				console.log(BLUE + "Istanbul requires valid 'coverage-summary.json' file!");
 			}
 		}
 	} else if (command ==='front-end'){
