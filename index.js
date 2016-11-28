@@ -300,7 +300,13 @@ function jscs(path, present, fix){
 
 try{
 	if (command === 'back-end'){
-		executeMochaTests(argv.mocha);
+
+		if(isFileSync(argv.istanbul)){
+			executeMochaTests(argv.mocha);
+		} else {
+			console.log(RED + 'File doe not exist!!');
+				console.log(BLUE + "Mocha requires valid test file!");
+		}
 		if (typeof argv.istanbul !== 'undefined'){
 
 			if(isFileSync(argv.istanbul)){
