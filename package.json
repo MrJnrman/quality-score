@@ -19,5 +19,13 @@
     "nightwatch": "^0.9.9",
     "yargs": "^6.4.0"
   },
-  "devDependencies": {}
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MrJnrman/quality-score.git"
+  },
+  "bugs": {
+    "url": "https://github.com/MrJnrman/quality-score/issues"
+  },
+  "homepage": "https://github.com/MrJnrman/quality-score#readme"
 }
