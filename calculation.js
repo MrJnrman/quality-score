@@ -2,6 +2,7 @@ var fs = require('fs');
 
 var frontOutput = './frontResults.json';
 var backOutput = './backResults.json';
+var BLUE = '\033[0;34m';
 
 function isFileSync(path){
 	try{

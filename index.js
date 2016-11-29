@@ -76,7 +76,9 @@ var argv = require('yargs')
 
 		}).help('help');
 	})
-	.help('help')
+	.command('score', 'View Quality Score', function(yargs){
+		cal.generateScore();
+	})
 	.argv;
 
 var command = argv._[0];
@@ -298,43 +300,35 @@ function jscs(path, present, fix){
 }
 
 
-chain.funcA = function () {
-	try{
-		if (command === 'back-end'){555
+try{
+	if (command === 'back-end'){
 
-			if(isFileSync(argv.mocha)){
-				executeMochaTests(argv.mocha);
+		if(isFileSync(argv.mocha)){
+			executeMochaTests(argv.mocha);
+		} else {
+			console.log(RED + 'File doe not exist!!');
+			console.log(BLUE + "Mocha requires valid test file!" );
+		}
+		if (typeof argv.istanbul !== 'undefined'){
+
+			if(isFileSync(argv.istanbul)){
+				retrieveInstanbulCoverageResults(argv.istanbul);
 			} else {
 				console.log(RED + 'File doe not exist!!');
-				console.log(BLUE + "Mocha requires valid test file!" );
-			}
-			if (typeof argv.istanbul !== 'undefined'){
-
-				if(isFileSync(argv.istanbul)){
-					retrieveInstanbulCoverageResults(argv.istanbul);
-				} else {
-					console.log(RED + 'File doe not exist!!');
-					console.log(BLUE + "Istanbul requires valid 'coverage-summary.json' file!");
-				}
-			}
-		} else if (command ==='front-end'){
-			if (typeof argv.nightwatch !== 'undefined'){
-				executeNightWatchTests(argv.nightwatch);
-			}
-		} else {
-			if (command === 'jscs'){
-				jscs(argv.p, argv.s, argv.f)
+				console.log(BLUE + "Istanbul requires valid 'coverage-summary.json' file!");
 			}
 		}
-	} catch(e){
-		console.log('Unable to execute tests');
-		console.log(e);
+	} else if (command ==='front-end'){
+		if (typeof argv.nightwatch !== 'undefined'){
+			executeNightWatchTests(argv.nightwatch);
+		}
+	} else {
+		if (command === 'jscs'){
+			jscs(argv.p, argv.s, argv.f)
+		}
 	}
+} catch(e){
+	console.log('Unable to execute tests');
+	console.log(e);
 }
-
-chain.funcB = function(){
-	cal.generateScore();
-}
-
-chain.funcA().funcB();
 
