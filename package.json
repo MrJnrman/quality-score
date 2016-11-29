@@ -1,6 +1,6 @@
 {
   "name": "quality-score",
-  "version": "1.0.15",
+  "version": "1.0.16",
   "description": "Calculates an overall quality score",
   "main": "index.js",
   "scripts": {
