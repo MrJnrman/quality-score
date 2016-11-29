@@ -295,7 +295,7 @@ function jscs(path, present, fix){
 
 
 try{
-	if (command === 'back-end'){
+	if (command === 'back-end'){555
 
 		if(isFileSync(argv.mocha)){
 			executeMochaTests(argv.mocha);
@@ -321,10 +321,24 @@ try{
 			jscs(argv.p, argv.s, argv.f)
 		}
 	}
+
+	if(isFileSync(frontOutput)){
+		var frontJSON = fs.readFileSync(frontOutput);
+		var frontOutputObj = JSON.parse(frontJSON);
+		console.log(BLUE + "Front End Quality Score:" + frontOutputObj.score + "%");
+	}
+
+	if(isFileSync(backOutput)){
+		var backJSON = fs.readFileSync(backOutput);
+		var backOutputObj = JSON.parse(backJSON);
+		console.log(BLUE + "Back End Quality Score:" + backOutputObj.score + "%");
+	}
 } catch(e){
 	console.log('Unable to execute tests');
 	console.log(e);
 }
+
+
 
 
 // console.log(argv.istanbul); 
