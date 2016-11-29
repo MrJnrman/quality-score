@@ -267,7 +267,6 @@ function executeNightWatchTests(nightwatchPath){
 	  reporter: './node_modules/quality-score/globalModule.js'
 	}, done, settings)
 	.on('exit', function (test) {
-	  console.log(test);
 	  //manageFile(test, 'nightwatch');
 	});
 }
