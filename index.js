@@ -3,6 +3,7 @@
 var Mocha = require('mocha');
 var fs = require('fs');
 var path = require('path');
+var cal = require('./calculation');
 var nightwatch = require('nightwatch');
 var exec = require('child_process').exec;
 var argv = require('yargs')
@@ -82,6 +83,7 @@ var command = argv._[0];
 var mocha = new Mocha({});
 var testing = [];
 var error = [];
+var chain = {};
 var RED = '\033[0;31m';
 var BLUE = '\033[0;34m';
 var NC = '\033[0m';
@@ -161,6 +163,7 @@ function isDirSync(path){
 		return fs.statSync(path).isDirectory();
 	} catch(e){
 		return false;
+	}
 }
 
 function isFileSync(path){
@@ -168,6 +171,7 @@ function isFileSync(path){
 		return fs.statSync(path).isFile();
 	} catch (e){
 		return false;
+	}
 }
 
 function executeMochaTests(testPath){
@@ -294,51 +298,43 @@ function jscs(path, present, fix){
 }
 
 
-try{
-	if (command === 'back-end'){555
+chain.funcA = function () {
+	try{
+		if (command === 'back-end'){555
 
-		if(isFileSync(argv.mocha)){
-			executeMochaTests(argv.mocha);
-		} else {
-			console.log(RED + 'File doe not exist!!');
-			console.log(BLUE + "Mocha requires valid test file!" );
-		}
-		if (typeof argv.istanbul !== 'undefined'){
-
-			if(isFileSync(argv.istanbul)){
-				retrieveInstanbulCoverageResults(argv.istanbul);
+			if(isFileSync(argv.mocha)){
+				executeMochaTests(argv.mocha);
 			} else {
 				console.log(RED + 'File doe not exist!!');
-				console.log(BLUE + "Istanbul requires valid 'coverage-summary.json' file!");
+				console.log(BLUE + "Mocha requires valid test file!" );
+			}
+			if (typeof argv.istanbul !== 'undefined'){
+
+				if(isFileSync(argv.istanbul)){
+					retrieveInstanbulCoverageResults(argv.istanbul);
+				} else {
+					console.log(RED + 'File doe not exist!!');
+					console.log(BLUE + "Istanbul requires valid 'coverage-summary.json' file!");
+				}
+			}
+		} else if (command ==='front-end'){
+			if (typeof argv.nightwatch !== 'undefined'){
+				executeNightWatchTests(argv.nightwatch);
+			}
+		} else {
+			if (command === 'jscs'){
+				jscs(argv.p, argv.s, argv.f)
 			}
 		}
-	} else if (command ==='front-end'){
-		if (typeof argv.nightwatch !== 'undefined'){
-			executeNightWatchTests(argv.nightwatch);
-		}
-	} else {
-		if (command === 'jscs'){
-			jscs(argv.p, argv.s, argv.f)
-		}
+	} catch(e){
+		console.log('Unable to execute tests');
+		console.log(e);
 	}
-
-	if(isFileSync(frontOutput)){
-		var frontJSON = fs.readFileSync(frontOutput);
-		var frontOutputObj = JSON.parse(frontJSON);
-		console.log(BLUE + "Front End Quality Score:" + frontOutputObj.score + "%");
-	}
-
-	if(isFileSync(backOutput)){
-		var backJSON = fs.readFileSync(backOutput);
-		var backOutputObj = JSON.parse(backJSON);
-		console.log(BLUE + "Back End Quality Score:" + backOutputObj.score + "%");
-	}
-} catch(e){
-	console.log('Unable to execute tests');
-	console.log(e);
 }
 
+chain.funcB = function(){
+	cal.generateScore();
+}
 
+chain.funcA().funcB();
 
-
-// console.log(argv.istanbul); 
