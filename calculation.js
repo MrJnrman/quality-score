@@ -68,17 +68,17 @@ exports.generateScore = function (){
 
 		fs.writeFileSync(backOutput, JSON.stringify(backOutputObj));
 
-		if(isFileSync(frontOutput)){
-			var frontJSON = fs.readFileSync(frontOutput);
-			var frontOutputObj = JSON.parse(frontJSON);
-			console.log(BLUE + "Front End Quality Score: " + frontOutputObj.score + "%");
-		}
+	}
 
-		if(isFileSync(backOutput)){
-			var backJSON = fs.readFileSync(backOutput);
-			var backOutputObj = JSON.parse(backJSON);
-			console.log(BLUE + "Back End Quality Score: " + backOutputObj.score + "%");
-		}
+	if(isFileSync(frontOutput)){
+		var frontJSON = fs.readFileSync(frontOutput);
+		var frontOutputObj = JSON.parse(frontJSON);
+		console.log(BLUE + "Front End Quality Score: " + frontOutputObj.score + "%");
+	}
 
+	if(isFileSync(backOutput)){
+		var backJSON = fs.readFileSync(backOutput);
+		var backOutputObj = JSON.parse(backJSON);
+		console.log(BLUE + "Back End Quality Score: " + backOutputObj.score + "%");
 	}
 };
