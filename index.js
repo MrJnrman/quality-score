@@ -273,6 +273,11 @@ function executeNightWatchTests(nightwatchPath){
 
 function jscs(path, present, fix){
 	// figure out how to make fix work
+	jscsrc = {
+		present: present
+	}
+	fs.writeFileSync('./.jscsrc', JSON.stringify(jscsrc));
+	
 	if(fix){
 		if(isFileSync(path)){
 			var cmd = 'jscs ' + path + ' --fix --present=' + present + ' > code-style.txt';	
